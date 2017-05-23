@@ -1,5 +1,6 @@
 import os
 import re
+import math
 
 GLOBAL_DICT = {}
 
@@ -50,6 +51,16 @@ def createDirectoryDict(fileList): # get fileList from dirWalk
                 GLOBAL_DICT[word].append((docID, fileDict[word]))
 
     print GLOBAL_DICT
+    
+def calculateWeight(tf, df, N):
+    '''
+    Calculate the tf-idf weight of a document
+        - tf = term frequency, (# occurrences of term in doc)/(total terms in doc)
+        - df = number of docs containing term
+        - N = total number of documents in corpus
+    '''
+    weight = (math.log(1 + tf)) * (math.log((N / df), 10))
+    return weight
         
 
 
