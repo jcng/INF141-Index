@@ -56,7 +56,10 @@ def calculateWeight(tf, df, N):
     '''
     Calculate the tf-idf weight of a document
         - tf = term frequency, (# occurrences of term in doc)/(total terms in doc)
+            - # occurrences of term in doc: fileDict[word]
+            - total terms in doc: length of fileDict
         - df = number of docs containing term
+            - length of GLOBAL_DICT[word]
         - N = total number of documents in corpus
     '''
     weight = (math.log(1 + tf)) * (math.log((N / df), 10))
