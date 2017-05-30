@@ -19,8 +19,16 @@ class searchGUI:
         self.query = Entry(frame)
         self.query.pack(side=LEFT, padx=10, pady=10)
 
+        self.results = Text(frame, height=15, width = 50)
+        self.results.pack()
+
     def search(self):
-        print(self.query.get())
+        resultsString = """
+This is a multi line string
+You can print
+Whatever you want
+        """
+        self.results.insert(END, resultsString)
 
 root = Tk()
 application = searchGUI(root)
