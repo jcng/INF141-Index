@@ -1,4 +1,7 @@
-from tkinter import *
+try:
+    from tkinter import *
+except ImportError:
+    from Tkinter import *
 from index import Index
 from urls import URLS
 from collections import namedtuple
@@ -16,30 +19,33 @@ class searchGUI:
         self.urls=urls
         master.minsize(width=800, height=400)
         
-        frame = Frame(master)
-        frame.pack()
         
         
-        self.search = Button(frame,
+        self.search = Button(master,
                              text="Search",
                              command = self.search)
-        self.search.pack(side=TOP, padx=10, pady=10)
+        self.search.grid(row=1, column=2, sticky=W)
 
-        self.query = Entry(frame)
-        self.query.pack(side=TOP, padx=10, pady=10)
+        self.query = Entry(master)
+        self.query.grid(row=2, column=2, sticky=N)
 
+        self.scrollbar = Scrollbar(master)
+        self.scrollbar.grid(row=2, column=0, sticky=(N+S))
 
-        self.scrollbar = Scrollbar(frame)
-        self.scrollbar.pack(side=LEFT, fill=Y)
-
-        self.listbox = Listbox(frame, height=15, width = 4, yscrollcommand=self.scrollbar.set)
+        self.listbox = Listbox(master, height=15, width = 4, yscrollcommand=self.scrollbar.set)
+        self.scrollbar.config(command=self.listbox.yview)
         for i in range(1,100):
             self.listbox.insert(END, str(i))
-        self.listbox.pack(side=LEFT, fill=Y)
+        self.listbox.grid(row=2, column=1)
         
-        self.results = Text(frame, height=15, width = 150)
-        self.results.pack(side=RIGHT)
+        self.results = Text(master, height=15, width = 150)
+        self.results.grid(row=2, column=3)
 
+        self.scrollTitle = Label(master, text="# Results")
+        self.scrollTitle.grid(row=1, column=0, columnspan=2)
+
+        self.scrollTitle = Label(master, text="ICS Search Engine", font=("Calibri", 24))
+        self.scrollTitle.grid(row=0, column=0, columnspan=4)
 
 
 
@@ -56,4 +62,3 @@ class searchGUI:
         for item in results:
             resultsString+=self.urls[item[1]]+'\n'
         self.results.insert(END, resultsString)
-
